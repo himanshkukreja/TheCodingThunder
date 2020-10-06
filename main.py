@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request
+from flask import Flask,render_template, request, session
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -10,6 +10,7 @@ with open('config.json','r') as c:
   params = json.load(c)["params"]
 
 app = Flask(__name__)
+app.secret_key = 'secret-key'
 app.config.update(
   MAIL_SERVER = 'smtp.gmail.com',
   MAIL_PORT ='465',
@@ -76,5 +77,21 @@ def contact():
 def post_route(post_slug):
   post = Posts.query.filter_by(slug=post_slug).first()
   return render_template('post.html',params = params, post = post)
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def dashboard():
+
+  if ('user' in session and session['user']==params['admin_user']):
+    return render_template('dashboard.html', params = params)
+
+  if (request.method == "POST"):
+    username = request.form.get('uname')
+    password = request.form.get('pass')
+    if (username==params['admin_user']  and password==params['admin_password']):
+      session['user'] = username
+      return render_template('dashboard.html',params = params)
+  else:
+    return render_template('signin.html',params = params)
 
 app.run(port=500, debug=True)
