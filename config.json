@@ -1,0 +1,18 @@
+{
+  "params":
+  {
+    "local_server":"True",
+    "local_uri":  "mysql://root:@localhost/thecodingthunder",
+    "prod_uri":  "mysql://root:@localhost/thecodingthunder",
+    "fb_url":"https://www.facebook.com/profile.php?id=100011072461162",
+    "twitter_url":"https://twitter.com/Himansh_Arora99",
+    "github_url" :"https://github.com/himanshkukreja",
+    "tag_line": "A Blog By and For The Programmers",
+    "gmail_username": "help.codingthunder@gmail.com",
+    "gmail_password": "codingthunder",
+    "about_text": "Hi, this is a blogging site created using flask. Author of this site is Himanshu Kukreja",
+    "no_of_posts": ""
+
+  }
+
+}
