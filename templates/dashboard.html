@@ -17,7 +17,32 @@
 
 <!-- Main Content -->
 <div class="container">
-  Welcome you are logged in
+  <h1 class="text-center">Upload a file</h1>
+  <div >
+    <p>We will upload our file here</p>
+  </div>
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th>Serial no</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for post in posts %}
+      <tr>
+        <td>{{post.sno}}</td>
+        <td>{{post.title}}</td>
+        <td>{{post.date}}</td>
+        <td><a href="/edit/{{post.sno}}"><button class="btn btn-primary">Edit</button></a></td>
+        <td><button class="btn btn-primary">Delete</button></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}

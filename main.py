@@ -79,19 +79,41 @@ def post_route(post_slug):
   return render_template('post.html',params = params, post = post)
 
 
+
 @app.route('/admin', methods=['GET', 'POST'])
 def dashboard():
 
   if ('user' in session and session['user']==params['admin_user']):
-    return render_template('dashboard.html', params = params)
-
+    posts = Posts.query.all()
+    return render_template('dashboard.html',params = params, posts=posts)
   if (request.method == "POST"):
     username = request.form.get('uname')
     password = request.form.get('pass')
     if (username==params['admin_user']  and password==params['admin_password']):
       session['user'] = username
-      return render_template('dashboard.html',params = params)
+      posts = Posts.query.all()
+      return render_template('dashboard.html',params = params, posts=posts)
   else:
     return render_template('signin.html',params = params)
+
+@app.route('/edit/<string:sno>', methods=['GET', 'POST'])
+def edit(sno):
+  if ('user' in session and session['user']==params['admin_user']):
+    if request.method == "POST":
+      box_title = request.form.get('title')
+      tagline = request.form.get('tagline')
+      slug = request.form.get('slug')
+      content = request.form.get('content')
+      img_file = request.form.get('img_file')
+
+      if sno =='0':
+        entry = Posts(title=box_title, slug= slug, content=content, tagline = tagline, img = img_file)
+        db.session.add(entry)
+        db.session.commit()
+
+    return render_template('edit.html', params=params, sno=sno)
+
+
+
 
 app.run(port=500, debug=True)
