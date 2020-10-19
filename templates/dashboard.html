@@ -18,8 +18,9 @@
 <!-- Main Content -->
 <div class="container">
   <h1 class="text-center">Upload a file</h1>
-  <div >
-    <p>We will upload our file here</p>
+  <div class="text-center">
+    <p><a href="/edit/0"><button class="btn btn-primary">Upload A Post</button></a>
+    </p>
   </div>
   <table class="table text-center">
     <thead>
@@ -29,6 +30,7 @@
         <th>Date</th>
         <th>Edit</th>
         <th>Delete</th>
+    
       </tr>
     </thead>
     <tbody>
@@ -43,6 +45,10 @@
       {% endfor %}
     </tbody>
   </table>
+  <hr>
+  <div class="text-center">
+    <a href="/logout"><button class="btn btn-primary">Logout</button></a>
+  </div>
 </div>
 
 {% endblock %}

@@ -1,8 +1,10 @@
-from flask import Flask,render_template, request, session
+from flask import Flask,render_template, request, session,redirect
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import json
 from flask_mail import Mail
+import os
+from werkzeug.utils import secure_filename
 
 
 local_server=True
@@ -11,6 +13,7 @@ with open('config.json','r') as c:
 
 app = Flask(__name__)
 app.secret_key = 'secret-key'
+app.config['UPLOAD_FOLDER'] = params['upload_location']
 app.config.update(
   MAIL_SERVER = 'smtp.gmail.com',
   MAIL_PORT ='465',
@@ -107,13 +110,27 @@ def edit(sno):
       img_file = request.form.get('img_file')
 
       if sno =='0':
-        entry = Posts(title=box_title, slug= slug, content=content, tagline = tagline, img = img_file)
+        entry = Posts(title=box_title, slug= slug, content=content, subtitle = tagline, img = img_file, date=datetime.now())
         db.session.add(entry)
         db.session.commit()
+      else:
+        post = Posts.query.filter_by(sno = sno).first()
+        post.title = box_title
+        post.content = content
+        post.subtitle= tagline
+        post.slug = slug
+        post.img= img_file
+        post.date = datetime.now()
+        db.session.commit()
+        return redirect('/edit/'+sno)
+    post = Posts.query.filter_by(sno = sno).first()
+    return render_template('edit.html', params=params, post=post)
 
-    return render_template('edit.html', params=params, sno=sno)
-
-
-
-
+@app.route('/admin', methods=['GET', 'POST'])
+def uploader():
+    if ('user' in session and session['user']==params['admin_user']):
+      if (request.method == 'POST'):
+        f=request.files['file']
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+        return redirect('/edit/'+sno)
 app.run(port=500, debug=True)
