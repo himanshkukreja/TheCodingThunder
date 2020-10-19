@@ -20,11 +20,11 @@
   {% if sno == "0" %}
     <h1 class="text-center">Upload a file</h1>
   {% else %}
-    <h1 class="text-center">Edit a File</h1>
+    <h1 class="text-center">Edit the Blog</h1>
   {% endif %}  
 
    
-  <form name="sentMessage" id="contactForm" method ="post" action="/edit/{{post.sno}}" novalidate>
+  <form name="sentMessage" id="contactForm" method ="post" action="/edit/{{sno}}" novalidate>
     <div class="control-group">
       <div class="form-group floating-label-form-group controls">
         <label>Title</label>
@@ -60,15 +60,8 @@
           <p class="help-block text-danger"></p>
         </div>
       </div>
-     <br>
-     <form action="/uploader" method="post" enctype="multipart/form-data">
-      <input type="file" name="file"> 
-      <button type="submit" class="btn btn-small" id="sendMessageButton">Upload</button>
-
-    </form>
-    
     <br>
-    <div id="success"></div>
+    <div id="success"></div>     
     <button type="submit" class="btn btn-primary" id="sendMessageButton">Submit</button>
   </form>
   

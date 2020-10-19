@@ -17,9 +17,38 @@
 
 <!-- Main Content -->
 <div class="container">
-  <h1 class="text-center">Upload a file</h1>
+  <h1 class="text-center">Basic Actions</h1>
   <div class="text-center">
     <p><a href="/edit/0"><button class="btn btn-primary">Upload A Post</button></a>
+    </p>
+  </div>
+  <div class="text-center">
+    <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+      Upload Post Image </button></p>
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Upload The Image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/uploader" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                  <input type="file" name="file" class="form-control-file" id="exampleFormControlFile1">
+                </div>
+                <button type="submit" class="btn btn-primary btn-small">Upload</button>
+              </form>
+         
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="text-center">
+    <p><a href="/logout"><button class="btn btn-primary">Logout</button></a>
     </p>
   </div>
   <table class="table text-center">
@@ -28,27 +57,29 @@
         <th>Serial no</th>
         <th>Title</th>
         <th>Date</th>
+        <th>Image filename</th>
         <th>Edit</th>
         <th>Delete</th>
     
       </tr>
     </thead>
     <tbody>
+    {% set count = namespace(value=1) %}
     {% for post in posts %}
       <tr>
-        <td>{{post.sno}}</td>
+        <td>{{count.value}}</td>
         <td>{{post.title}}</td>
         <td>{{post.date}}</td>
+        <td>{{post.img}}</td>
         <td><a href="/edit/{{post.sno}}"><button class="btn btn-primary">Edit</button></a></td>
-        <td><button class="btn btn-primary">Delete</button></td>
+       <td> <a href="/delete/{{post.sno}}"><button type="button" class="btn btn-primary">Delete</button></a></td>
       </tr>
+      {% set count.value = count.value + 1 %}
       {% endfor %}
     </tbody>
   </table>
   <hr>
-  <div class="text-center">
-    <a href="/logout"><button class="btn btn-primary">Logout</button></a>
-  </div>
 </div>
+
 
 {% endblock %}
