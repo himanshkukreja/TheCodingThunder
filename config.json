@@ -9,11 +9,11 @@
     "github_url" :"https://github.com/himanshkukreja",
     "tag_line": "A Blog By and For The Programmers",
     "gmail_username": "help.codingthunder@gmail.com",
-    "gmail_password": "codingthunder",
+    "gmail_password": "*******",
     "about_text": "Hi, this is a blogging site created using flask. Author of this site is Himanshu Kukreja",
     "no_of_posts": 5,
     "admin_user": "Himanshu kukreja",
-    "admin_password" : "admin123",
+    "admin_password" : "******",
     "upload_location" : "C:\\Users\\Himanshu kukreja\\Desktop\\CODING\\flask_T\\static\\img"
 
   }
